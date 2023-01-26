@@ -15,4 +15,40 @@ getComputerChoice = function() {
     return choice_word;
 }
 
-console.log(getComputerChoice());
+playRound = function(computerSelection, playerSelection) {
+    computerSelection = computerSelection.toLowerCase();
+    playerSelection = playerSelection.toLowerCase();
+
+    if (computerSelection === playerSelection) {
+        return "It's a tie!";
+    }
+
+    if (computerSelection === "rock") {
+        if (playerSelection === "paper") {
+            return "You win! Paper beats rock.";
+        }
+        if (playerSelection === "scissors") {
+            return "You lose! Rock beats scissors.";
+        }
+    }
+
+    if (computerSelection === "paper") {
+        if (playerSelection === "rock") {
+            return "You lose! Paper beats rock.";
+        }
+        if (playerSelection === "scissors") {
+            return "You win! Scissors beats paper.";
+        }
+    }
+
+    if (computerSelection === "scissors") {
+        if (playerSelection === "paper") {
+            return "You lose! Scissors beats paper.";
+        }
+        if (playerSelection === "rock") {
+            return "You win! Rock beats scissors.";
+        }
+    }
+}
+
+console.log(playRound("rock", "paper"));
