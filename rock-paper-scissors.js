@@ -51,4 +51,17 @@ playRound = function(computerSelection, playerSelection) {
     }
 }
 
-console.log(playRound("rock", "paper"));
+game = function() {
+    let playerWins = 0;
+    let computerWins = 0;
+    let playerSelection = null;
+    let computerSelection = null;
+
+    for (let i = 0; i < 5; i++) {
+        playerSelection = prompt("Enter a choice: \n");
+        computerSelection = getComputerChoice();
+        console.log(playRound(computerSelection, playerSelection));
+    }
+}
+
+game();
