@@ -16,6 +16,7 @@ getComputerChoice = function() {
 }
 
 playRound = function(computerSelection, playerSelection) {
+
     computerSelection = computerSelection.toLowerCase();
     playerSelection = playerSelection.toLowerCase();
 
@@ -58,10 +59,16 @@ game = function() {
     let computerSelection = null;
 
     for (let i = 0; i < 5; i++) {
-        playerSelection = prompt("Enter a choice: \n");
+        //playerSelection = prompt("Enter a choice: \n");
         computerSelection = getComputerChoice();
         console.log(playRound(computerSelection, playerSelection));
     }
 }
 
-game();
+let buttons = document.querySelectorAll("button");
+
+buttons.forEach(button => {
+    button.addEventListener("click", () => {
+        console.log(playRound(getComputerChoice(), button.textContent));
+    })
+});
