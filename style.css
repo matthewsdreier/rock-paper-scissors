@@ -1,0 +1,27 @@
+* {
+    font-family: "Arial", sans-serif
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.subtitle, .buttons, .result {
+    margin-bottom: 20px;
+}
+
+.choice, .score {
+    display: flex;
+    gap: 50px;
+}
