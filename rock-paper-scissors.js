@@ -21,83 +21,91 @@ playRound = function(computerSelection, playerSelection) {
     playerSelection = playerSelection.toLowerCase();
 
     if (computerSelection === playerSelection) {
-        return "It's a tie!";
+        return "This round is a tie!";
     }
 
     if (computerSelection === "rock") {
         if (playerSelection === "paper") {
-            return "You win! Paper beats rock.";
+            return "You win this round! Paper beats rock.";
         }
         if (playerSelection === "scissors") {
-            return "You lose! Rock beats scissors.";
+            return "You lose this round! Rock beats scissors.";
         }
     }
 
     if (computerSelection === "paper") {
         if (playerSelection === "rock") {
-            return "You lose! Paper beats rock.";
+            return "You lose this round! Paper beats rock.";
         }
         if (playerSelection === "scissors") {
-            return "You win! Scissors beats paper.";
+            return "You win this round! Scissors beats paper.";
         }
     }
 
     if (computerSelection === "scissors") {
         if (playerSelection === "paper") {
-            return "You lose! Scissors beats paper.";
+            return "You lose this round! Scissors beats paper.";
         }
         if (playerSelection === "rock") {
-            return "You win! Rock beats scissors.";
+            return "You win this round! Rock beats scissors.";
         }
     }
 }
 
-let updateScores = function() {
-    playerScore.textContent = `Your Score: ${playerWins}`;
-    computerScore.textContent = `Computer's Score: ${computerWins}`;
-}
+let updateScores = function(computerChoice, playerChoice, matchResult) {
+    playerChoiceBoard.textContent = `Your Play: ${playerChoice}`;
+    computerChoiceBoard.textContent = `Computer's Play: ${computerChoice}`;
+    
+    playerScoreboard.textContent = `Your Score: ${playerScore}`;
+    computerScoreboard.textContent = `Computer's Score: ${computerScore}`;
 
-let endGame = function() {
-    if (playerWins > computerWins) {
-        result.textContent = "Congratulations! You won the game.";
+    matchScoreboard.textContent = matchResult;
+
+    if (computerScore + playerScore < 5) {
+        if (computerScore > playerScore) {
+            gameScoreboard.textContent = "The computer is winning!";
+        } else if (computerScore < playerScore) {
+            gameScoreboard.textContent = "You're winning!";
+        } else {
+            gameScoreboard.textContent = "All tied up!";
+        }
     } else {
-        result.textContent = "You lose the game.";
+        if (computerScore > playerScore) {
+            gameScoreboard.textContent = "You lost the game.";
+        } else {
+            gameScoreboard.textContent = "Congratulations, you won the game!";
+        }
     }
 }
 
-let result = document.querySelector(".result");
-
-let playerScore = document.querySelector(".player");
-let computerScore = document.querySelector(".computer")
-
+let playerScore = 0;
+let computerScore = 0;
+let playerScoreboard = document.querySelector(".score .player");
+let computerScoreboard = document.querySelector(".score .computer")
+let playerChoiceBoard = document.querySelector(".choice .player");
+let computerChoiceBoard = document.querySelector(".choice .computer");
 let buttons = document.querySelectorAll("button");
-
-let playerWins = 0;
-let computerWins = 0;
+let matchScoreboard = document.querySelector(".result");
+let gameScoreboard = document.querySelector(".game");
 
 buttons.forEach(button => {
     button.addEventListener("click", () => {
 
-        if (playerWins + computerWins === 5) {
-            playerWins = 0;
-            computerWins = 0;
+        if (playerScore + computerScore === 5) {
+            playerScore = 0;
+            computerScore = 0;
         }
 
-        let matchResult = playRound(getComputerChoice(), button.textContent);
+        let computerChoice = getComputerChoice();
+        let matchResult = playRound(computerChoice, button.textContent);
         let win = matchResult.search("win");
 
         if (win >= 0) {
-            playerWins++;
+            playerScore++;
         } else {
-            computerWins++;
+            computerScore++;
         }
 
-        updateScores();
-
-        result.textContent = matchResult;
-
-        if (playerWins + computerWins === 5) {
-            endGame();
-        }
+        updateScores(computerChoice, button.textContent, matchResult);
     })
 });
