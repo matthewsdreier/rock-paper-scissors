@@ -52,23 +52,52 @@ playRound = function(computerSelection, playerSelection) {
     }
 }
 
-game = function() {
-    let playerWins = 0;
-    let computerWins = 0;
-    let playerSelection = null;
-    let computerSelection = null;
+let updateScores = function() {
+    playerScore.textContent = `Your Score: ${playerWins}`;
+    computerScore.textContent = `Computer's Score: ${computerWins}`;
+}
 
-    for (let i = 0; i < 5; i++) {
-        //playerSelection = prompt("Enter a choice: \n");
-        computerSelection = getComputerChoice();
-        console.log(playRound(computerSelection, playerSelection));
+let endGame = function() {
+    if (playerWins > computerWins) {
+        result.textContent = "Congratulations! You won the game.";
+    } else {
+        result.textContent = "You lose the game.";
     }
 }
 
+let result = document.querySelector(".result");
+
+let playerScore = document.querySelector(".player");
+let computerScore = document.querySelector(".computer")
+
 let buttons = document.querySelectorAll("button");
+
+let playerWins = 0;
+let computerWins = 0;
 
 buttons.forEach(button => {
     button.addEventListener("click", () => {
-        console.log(playRound(getComputerChoice(), button.textContent));
+
+        if (playerWins + computerWins === 5) {
+            playerWins = 0;
+            computerWins = 0;
+        }
+
+        let matchResult = playRound(getComputerChoice(), button.textContent);
+        let win = matchResult.search("win");
+
+        if (win >= 0) {
+            playerWins++;
+        } else {
+            computerWins++;
+        }
+
+        updateScores();
+
+        result.textContent = matchResult;
+
+        if (playerWins + computerWins === 5) {
+            endGame();
+        }
     })
 });
